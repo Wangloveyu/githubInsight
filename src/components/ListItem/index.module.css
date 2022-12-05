@@ -1,0 +1,18 @@
+.ListItem {
+  width: 100%;
+  height: 3em;
+  line-height: 3em;
+  background-color: white;
+  padding: 5px;
+  display: block;
+}
+
+.ListItem:hover {
+  background-color: #ebebeb;
+}
+
+.ListItem > label {
+  font-size: large;
+  text-align: left;
+  margin-right: 1em;
+}

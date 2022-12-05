@@ -7,7 +7,6 @@ const Register = () => {
   const [myForm] = Form.useForm()
 
   const handleSumbit = useCallback(() => {
-    console.log(myForm)
     myForm
       .validateFields()
       .then(res => {

@@ -1,0 +1,19 @@
+.Info {
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Info > img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin: 30px;
+}
+
+.Info > ul {
+  max-width: 300px;
+  width: 100%;
+}

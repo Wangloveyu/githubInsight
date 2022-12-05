@@ -2,8 +2,6 @@ body {
   height: 100%;
   width: 100%;
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -11,7 +9,12 @@ body {
 #root {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+li {
+  list-style-type: none;
 }

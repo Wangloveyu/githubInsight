@@ -9,7 +9,6 @@ const myAxios = axios.create({
 
 // 拦截请求
 myAxios.interceptors.request.use(config => {
-  console.log(config)
   if (config.method === 'post') {
     config.data = qs.stringify(config)
   }

@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@ant-design/icons': ^4.8.0
   '@types/react': ^18.0.24
   '@types/react-dom': ^18.0.8
   '@vitejs/plugin-react': ^2.2.0
@@ -13,6 +14,7 @@ specifiers:
   vite: ^3.2.3
 
 dependencies:
+  '@ant-design/icons': registry.npmmirror.com/@ant-design/icons/4.8.0_react-dom@18.2.0+react@18.2.0
   antd: registry.npmmirror.com/antd/5.0.4_react-dom@18.2.0+react@18.2.0
   axios: registry.npmmirror.com/axios/1.2.0
   qs: registry.npmmirror.com/qs/6.11.0

@@ -1,0 +1,17 @@
+.menuItem {
+  cursor: pointer;
+  padding: 10px;
+  margin: 5px;
+}
+
+.menuItem:hover {
+  background-color: #ebebeb;
+  border-radius: 5px;
+}
+
+.menuItem_chosen {
+  padding: 10px;
+  margin: 5px;
+  background-color: #bae0ff;
+  border-radius: 5px;
+}

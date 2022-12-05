@@ -1,0 +1,38 @@
+.RepoCard {
+  padding: 15px;
+  padding-bottom: 0px;
+  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  width: 220px;
+  height: 190px;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+.RepoCard > h3 {
+  text-align: left;
+}
+.RepoCard > p {
+  margin: 5px 0;
+  flex: 0;
+  text-align: left;
+  padding-right: 1em;
+}
+
+.RepoCard > div {
+  flex: 1;
+}
+
+.RepoCard > p:last-of-type {
+  font-weight: bolder;
+  font-size: larger;
+  text-align: right;
+  padding-right: 0px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.RepoCard > p:last-of-type:hover {
+  color: rgb(0, 162, 255);
+}
