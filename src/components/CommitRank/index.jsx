@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, Divider, List, Skeleton } from 'antd'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import styles from './index.module.css'
+
 const App = () => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
@@ -23,16 +25,7 @@ const App = () => {
     loadMoreData()
   }, [])
   return (
-    <div
-      id="scrollableDiv"
-      style={{
-        width: '100%',
-        height: 450,
-        overflow: 'auto',
-        padding: '0 16px',
-        border: '1px solid rgba(140, 140, 140, 0.35)'
-      }}
-    >
+    <div className={styles.details} id="scrollableDiv">
       <InfiniteScroll
         dataLength={data.length}
         next={loadMoreData}
@@ -51,12 +44,27 @@ const App = () => {
       >
         <List
           dataSource={data}
-          renderItem={item => (
-            <List.Item key={item.email}>
-              <List.Item.Meta avatar={<Avatar src={item.picture.large} />} title={<a href="https://ant.design">{item.name.last}</a>} description={item.email} />
-              <div>Content</div>
+          split={false}
+          header={
+            <List.Item className={styles.listItemContainer} style={{ borderBottom: '1px solid #efefef' }}>
+              <div>No.</div>
+              <div>Name</div>
+              <div>Commit</div>
             </List.Item>
-          )}
+          }
+          renderItem={(item, index) => {
+            return (
+              <List.Item className={styles.listItemContainer} key={item.email}>
+                <div>{index}</div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+                  <Avatar src={item.picture.large} />
+                  <div style={{ marginLeft: '1em' }}>{item.name.last}</div>
+                </div>
+
+                <div>{parseInt(Math.random() * 1000)}</div>
+              </List.Item>
+            )
+          }}
         />
       </InfiniteScroll>
     </div>

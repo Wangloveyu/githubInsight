@@ -41,25 +41,6 @@
   margin: 0;
 }
 
-.dot {
-  position: relative;
-  left: 0;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: radial-gradient(red 10%, white, red 50%);
-  z-index: 1;
-}
-
-.line {
-  position: relative;
-  top: 0;
-  width: 100px;
-  height: 5px;
-  background: #dbdbdb;
-  top: -10px;
-}
-
 /* 整个滚动条的样式 */
 .content::-webkit-scrollbar {
   width: 12px;
