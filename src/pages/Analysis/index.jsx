@@ -6,7 +6,7 @@ const Echarts = () => {
   const chartRef = useRef()
   const option = {
     title: {
-      text: 'Stacked Area Chart'
+      text: 'Code quality Chart'
     },
     tooltip: {
       trigger: 'axis',
@@ -18,7 +18,7 @@ const Echarts = () => {
       }
     },
     legend: {
-      data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+      data: ['Repo1', 'Repo2', 'Repo3', 'Repo4', 'Repo5']
     },
     toolbox: {
       feature: {
@@ -35,7 +35,7 @@ const Echarts = () => {
       {
         type: 'category',
         boundaryGap: false,
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: ['Version1', 'Version2', 'Version3', 'Version4', 'Version5', 'Version6', 'Version7']
       }
     ],
     yAxis: [
@@ -45,7 +45,7 @@ const Echarts = () => {
     ],
     series: [
       {
-        name: 'Email',
+        name: 'Repo1',
         type: 'line',
         stack: 'Total',
         areaStyle: {},
@@ -55,7 +55,7 @@ const Echarts = () => {
         data: [120, 132, 101, 134, 90, 230, 210]
       },
       {
-        name: 'Union Ads',
+        name: 'Repo2',
         type: 'line',
         stack: 'Total',
         areaStyle: {},
@@ -65,7 +65,7 @@ const Echarts = () => {
         data: [220, 182, 191, 234, 290, 330, 310]
       },
       {
-        name: 'Video Ads',
+        name: 'Repo3',
         type: 'line',
         stack: 'Total',
         areaStyle: {},
@@ -75,7 +75,7 @@ const Echarts = () => {
         data: [150, 232, 201, 154, 190, 330, 410]
       },
       {
-        name: 'Direct',
+        name: 'Repo4',
         type: 'line',
         stack: 'Total',
         areaStyle: {},
@@ -85,7 +85,7 @@ const Echarts = () => {
         data: [320, 332, 301, 334, 390, 330, 320]
       },
       {
-        name: 'Search Engine',
+        name: 'Repo5',
         type: 'line',
         stack: 'Total',
         label: {

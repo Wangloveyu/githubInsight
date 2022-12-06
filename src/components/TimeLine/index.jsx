@@ -8,10 +8,10 @@ import '../../assets/iconfont/iconfont.css'
 import TimeLineItem from '../TimeLineItem'
 
 const timeEvents = [
-  { event: '1fdsssssssssgfffffffffffffffffffd', time: '2001/12/12' },
-  { event: '1', time: '2001/12/12' },
-  { event: '1', time: '2001/12/12' },
-  { event: '1', time: '2001/12/12' },
+  { event: 'Commit1', time: 'Time:2001/12/12', actor:'Actor:Mike' },
+  { event: 'Commit2', time: 'Time:2001/12/14', actor:'Actor:Jack' },
+  { event: 'Commit3', time: 'Time:2001/12/16', actor:'Actor:Eleven' },
+  { event: 'Commit4', time: 'Time:2001/12/17', actor:'Actor:Jordan' },
   { event: '1', time: '2001/12/12' },
   { event: '1', time: '2001/12/12' },
   { event: '1', time: '2001/12/12' },
