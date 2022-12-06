@@ -1,0 +1,43 @@
+.container {
+  position: relative;
+}
+
+.window {
+  position: absolute;
+  top: 20px;
+  background-color: #fafafa;
+  border-radius: 5px;
+  padding: 10px;
+  width: fit-content;
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+.window > p {
+  height: 1.5em;
+  line-height: 1.5em;
+  margin: 0;
+}
+
+.dot {
+  position: relative;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: radial-gradient(red 10%, white, red 50%);
+  z-index: 1;
+}
+
+.line {
+  position: relative;
+  top: 0;
+  width: 100px;
+  height: 5px;
+  background: #dbdbdb;
+  top: -10px;
+}
+
+.end {
+  width: 200px;
+}

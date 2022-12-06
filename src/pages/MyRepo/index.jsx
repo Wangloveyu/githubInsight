@@ -4,6 +4,7 @@ import { Space } from 'antd'
 import { Button } from 'antd'
 import { useCallback } from 'react'
 import { useState } from 'react'
+import MySlider from '../../components/MySlider'
 import RepoCard from '../../components/RepoCard'
 import styles from './index.module.css'
 
@@ -60,13 +61,16 @@ export default () => {
     <div className={styles.MyRepo}>
       <div>
         <h2>My Repository</h2>
+        <div></div>
+        <Button style={{ marginRight: '10px' }}>Search</Button>
+
         <Button onClick={onClick}>Import</Button>
       </div>
-      <div className={styles.repos}>
+      <MySlider>
         {repos.map(item => {
           return <RepoCard key={item.key} item={item} />
         })}
-      </div>
+      </MySlider>
     </div>
   )
 }

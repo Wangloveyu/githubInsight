@@ -1,0 +1,101 @@
+.TimeLine {
+  margin-top: 20px;
+  width: 100%;
+  text-align: left;
+}
+
+.timeline {
+  width: 100%;
+  cursor: pointer;
+  height: 2em;
+  vertical-align: middle;
+  text-align: left;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.timeline:hover {
+  background-color: #bae0ff;
+}
+
+.content {
+  transition: all 1s;
+  overflow-x: scroll;
+  display: flex;
+  align-items: flex-start;
+  height: 200px;
+  width: 100%;
+}
+
+.window {
+  position: relative;
+  background-color: #efefef;
+  border-radius: 5px;
+  padding: 5px;
+  width: fit-content;
+}
+
+.window > p {
+  height: 1em;
+  line-height: 1em;
+  margin: 0;
+}
+
+.dot {
+  position: relative;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: radial-gradient(red 10%, white, red 50%);
+  z-index: 1;
+}
+
+.line {
+  position: relative;
+  top: 0;
+  width: 100px;
+  height: 5px;
+  background: #dbdbdb;
+  top: -10px;
+}
+
+/* 整个滚动条的样式 */
+.content::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #f2f2f2;
+  background-color: #f2f2f2;
+  border-radius: 6px;
+}
+
+/* 滚动条的轨道两端按钮，允许通过点击微调小方块的位置 */
+.content::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* 滚动条的轨道样式 */
+.content::-webkit-scrollbar-track {
+  background-color: #f2f2f2;
+  border-radius: 6px;
+}
+
+/* 内层轨道样式 */
+.content::-webkit-scrollbar-track-piece {
+  background-color: #f2f2f2;
+  border-radius: 6px;
+}
+
+/* 滚动条里面的小方块，能上下移动 */
+.content::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  box-shadow: inset 0 0 1px 0 #f2f2f2;
+  border: 3px solid #f2f2f2;
+  background-color: #d9d9d9;
+}
+
+/* 滚动条滑块hover时样式 */
+.content::-webkit-scrollbar-thumb:vertical:hover,
+.content::-webkit-scrollbar-thumb:horizontal:hover {
+  background-color: #c0c0c0;
+}
