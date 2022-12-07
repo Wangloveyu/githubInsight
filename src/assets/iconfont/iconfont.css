@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1670262662546') format('truetype');
+  src: url('iconfont.ttf?t=1670418320793') format('truetype');
 }
 
 .iconfont {
@@ -11,23 +11,39 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-right:before {
-  content: "\e6a3";
+.icon-fork:before {
+  content: "\e63e";
 }
 
-.icon-down:before {
+.icon-compare:before {
+  content: "\e6ce";
+}
+
+.icon-star:before {
+  content: "\e7df";
+}
+
+.icon-right:before {
   content: "\e7eb";
 }
 
-.icon-code:before {
-  content: "\e7fc";
+.icon-down:before {
+  content: "\e69b";
 }
 
 .icon-return:before {
   content: "\e81a";
 }
 
-.icon-compare:before {
-  content: "\e619";
+.icon-code:before {
+  content: "\e6f2";
+}
+
+.icon-issue-opened:before {
+  content: "\e61b";
+}
+
+.icon-git-commit:before {
+  content: "\e656";
 }
 

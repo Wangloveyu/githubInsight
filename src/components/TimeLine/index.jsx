@@ -64,7 +64,7 @@ export default props => {
           setShow(newState)
         }}
       >
-        {<i className={`iconfont ${show ? 'icon-down' : 'icon-right'}`}></i>}时间轴
+        {<i className={`iconfont ${show ? 'icon-down' : 'icon-right'}`}></i>}TimeLine
       </h3>
       <div className={styles.content} style={show ? {} : { height: '0px' }}>
         {timeEvents.map(item => {

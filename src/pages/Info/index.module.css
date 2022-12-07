@@ -1,5 +1,7 @@
 .Info {
   height: 100%;
+  width: 100%;
+  background-color: white;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -13,7 +15,12 @@
   margin: 30px;
 }
 
-.Info > ul {
+.Info > * {
+  width: 100%;
   max-width: 300px;
+}
+
+.MyRepo {
+  height: 100%;
   width: 100%;
 }

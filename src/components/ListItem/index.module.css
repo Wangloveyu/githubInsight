@@ -7,10 +7,6 @@
   display: block;
 }
 
-.ListItem:hover {
-  background-color: #ebebeb;
-}
-
 .ListItem > label {
   font-size: large;
   text-align: left;

@@ -28,7 +28,7 @@ const App = () => {
             padding: 24,
             margin: 0,
             minHeight: 280,
-            background: colorBgContainer
+            background: '#f0f4f8'
           }}
         >
           <Outlet />
