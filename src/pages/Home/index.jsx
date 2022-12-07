@@ -1,14 +1,27 @@
 import React from 'react'
-import { Breadcrumb, Layout, Menu, theme } from 'antd'
+import { Layout } from 'antd'
 import MySider from '../../components/MySider'
 import MyHeader from '../../components/MyHeader'
 import { Outlet } from 'react-router-dom'
-const { Header, Content, Sider, Footer } = Layout
+import { useEffect } from 'react'
+import { message } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+const { Header, Content, Sider } = Layout
 
 const App = () => {
-  const {
-    token: { colorBgContainer }
-  } = theme.useToken()
+  const navigator = useNavigate()
+  useEffect(() => {
+    if (!localStorage.getItem('login')) {
+      message.error({
+        content: 'The user is not logged in',
+        duration: 1,
+        onClose: () => {
+          navigator('/login')
+        }
+      })
+    }
+  }, [])
   return (
     <Layout style={{ height: '100%' }}>
       <Header className="header">

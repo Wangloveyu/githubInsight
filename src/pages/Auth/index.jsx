@@ -18,6 +18,6 @@ export default () => {
           navigator('/home/repo')
         }
     }
-  }, [])
+  }, [location.pathname])
   return <Outlet />
 }

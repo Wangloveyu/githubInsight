@@ -67,8 +67,8 @@ export default props => {
         {<i className={`iconfont ${show ? 'icon-down' : 'icon-right'}`}></i>}TimeLine
       </h3>
       <div className={styles.content} style={show ? {} : { height: '0px' }}>
-        {timeEvents.map(item => {
-          return <TimeLineItem item={item} />
+        {timeEvents.map((item, index) => {
+          return <TimeLineItem key={index} item={item} />
         })}
         <TimeLineItem item={{ time: '当前时间', event: 'hfsjkdjfhdj' }} end={true}></TimeLineItem>
       </div>
