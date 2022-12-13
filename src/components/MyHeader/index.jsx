@@ -5,19 +5,20 @@ import styles from './index.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useMemo } from 'react'
+import { useAppContext } from '../../context/appContext'
 
 export default props => {
   const navigator = useNavigate()
-  const user = useMemo(() => {
-    const data = JSON.parse(localStorage.getItem('userInfo'))
-    return data.username
-  }, [localStorage.getItem('userInfo')])
+  const { user } = useAppContext()
+  const userName = useMemo(() => {
+    return user?.userName
+  }, [localStorage.getItem('user')])
   return (
     <div className={styles.MyHeader}>
-      <h1>Hi, {user}</h1>
+      <h1>Hi, {userName}</h1>
       <Button
         onClick={() => {
-          localStorage.removeItem('login')
+          localStorage.removeItem('user')
           navigator('/login')
         }}
       >

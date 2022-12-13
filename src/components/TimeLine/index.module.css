@@ -21,13 +21,17 @@
 
 .content {
   transition: all 1s;
-  overflow-x: scroll;
+  overflow: hidden;
   display: flex;
   align-items: flex-start;
   height: 200px;
   width: 100%;
   padding-left: 50px;
   padding-top: 20px;
+}
+
+.content:hover {
+  overflow-x: scroll;
 }
 
 .window {

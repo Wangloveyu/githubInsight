@@ -8,14 +8,25 @@ import { message } from 'antd'
 import { Spin } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { Card } from 'antd'
+import { useAppContext } from '../../context/appContext'
+import { useEffect } from 'react'
 
 const Register = () => {
-  const navigator = useNavigate()
+  const navigate = useNavigate()
   const [myForm] = Form.useForm()
+  const { user, isLoading, showAlert, displayAlert, registerUser, loginUser } = useAppContext()
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/home')
+      }, 500)
+    }
+  }, [user, navigate])
 
   const register = async res => {
     return new Promise((resolve, reject) => {
-      localStorage.setItem('userInfo', JSON.stringify(res))
+      localStorage.setItem('user', JSON.stringify(res))
       resolve(true)
     })
   }
@@ -24,26 +35,23 @@ const Register = () => {
     myForm
       .validateFields()
       .then(res => {
-        register(res)
-          .then(data => {
-            console.log(data)
-            message.success({
-              content: 'Register successfully, jumping to login pages...',
-              duration: 1,
-              onClose: () => {
-                navigator('/login')
-              }
-            })
-          })
-          .catch(err => {
-            console.log(err)
-            message.error('Register Fail')
-          })
+        const { username, email, password } = res
+        if (!email || !password || !username) {
+          displayAlert()
+          return
+        }
+        const currentUser = { username, email, password }
+        registerUser(currentUser)
       })
       .catch(err => {
-        console.log('表单校验失败', err)
+        console.log(err)
+        message.error('Register Fail')
+      })
+      .catch(err => {
+        console.log(err)
       })
   }, [])
+
   return (
     <div className={styles.Register}>
       <Card
@@ -82,6 +90,22 @@ const Register = () => {
           </Form.Item>
 
           <Form.Item
+            label="E-mail"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your Email!'
+              },
+              {
+                type: 'email',
+                message: 'please input correct email'
+              }
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
             label="Password"
             name="password"
             rules={[
@@ -100,7 +124,18 @@ const Register = () => {
               span: 16
             }}
           >
-            <Button onClick={handleSumbit}>Register</Button>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Button type="primary" onClick={handleSumbit}>
+                Register
+              </Button>
+              <Button
+                onClick={() => {
+                  navigate('/login')
+                }}
+              >
+                Login
+              </Button>
+            </div>
           </Form.Item>
         </Form>
       </Card>

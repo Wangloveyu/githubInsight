@@ -12,6 +12,13 @@ import MySlider from '../../components/MySlider'
 import styles from './index.module.css'
 import '../../assets/iconfont/iconfont.css'
 import { useMemo } from 'react'
+import { useState } from 'react'
+import { useEffect } from 'react'
+import RepoSearch from '../../components/RepoSearch'
+import { useAppContext } from '../../context/appContext'
+import { notification } from 'antd'
+import { Spin } from 'antd'
+import { message } from 'antd'
 
 const items = [
   {
@@ -28,64 +35,210 @@ const items = [
   }
 ]
 
+// 用于映射路径和功能
+const path2func = {
+  basic: 'Repo Info'
+}
+
+const myFuncList = [
+  {
+    key: 1,
+    label: 'Basic Info',
+    path: 'basic'
+  },
+  {
+    key: 2,
+    label: 'Pull Request',
+    path: 'request'
+  },
+  {
+    key: 3,
+    label: 'Commit Frequency',
+    path: 'commit'
+  },
+  {
+    key: 4,
+    label: 'Issue Frequency',
+    path: 'issue'
+  },
+  {
+    key: 5,
+    label: 'Languages',
+    path: 'languages'
+  }
+]
+
 export default () => {
+  const [api, contextHolder] = notification.useNotification()
   const location = useLocation()
+  const navigate = useNavigate()
+  const [curRepoId, setCurRepoId] = useState('')
+  const [repoList, setRepoList] = useState({ items })
+  const [funcList, setFuncList] = useState({ items })
+  const [modal, contexthandler] = Modal.useModal()
+
+  const { isLoading, detail, getDashBoard, selectedList, getAllSelectedReposInfo } = useAppContext()
+
+  useEffect(() => {
+    console.log('detail', detail)
+    if (!selectedList) return
+    if (selectedList.size > 0) {
+      setCurRepoId([...selectedList][0].key)
+    } else {
+      setCurRepoId('')
+    }
+  }, [selectedList])
+
+  useEffect(() => {
+    if (curRepoId !== '') {
+      const temp = [...selectedList]
+      if (temp.length === 0) {
+        api.error({
+          message: 'error',
+          description: '选择仓库列表不允许为空',
+          onClose: () => {
+            navigate('/home/repo')
+          },
+          duration: 2,
+          placement: 'top'
+        })
+      } else {
+        getAllSelectedReposInfo()
+        getDashBoard(temp[0].key)
+        // 在这里设置仓库列表
+        setRepoList({
+          items: [...selectedList],
+          onClick: e => {
+            setCurRepoId(e.key)
+            getDashBoard(e.key)
+          }
+        })
+      }
+    }
+  }, [curRepoId])
+
+  // 计算当前路径
   const currentPath = useMemo(() => {
     const path = location.pathname.replace(/\/$/, '').split('/')
     return path[path.length - 1]
   }, [location])
-  const navigator = useNavigate()
 
-  const handleMenuClick = useCallback(
-    e => {
-      items.forEach(item => {
-        if (item.key === e.key && currentPath !== item.path) {
-          navigator(`/home/detail/${item.path}`)
+  // 将当前仓库的id转化为仓库名
+  const curRepoName = useMemo(() => {
+    let flag = true
+    let curRepoName = 'Current Repo'
+    if (curRepoId !== '') {
+      repoList.items.forEach(item => {
+        if (item.key === curRepoId) {
+          curRepoName = item.label
+          flag = false
         }
       })
-    },
-    [currentPath]
-  )
+    }
+    return curRepoName
+  }, [repoList, curRepoId])
 
-  const menuProps = {
-    items,
-    onClick: handleMenuClick
-  }
+  // 设置当前的功能
+  const curFunc = useMemo(() => {
+    let curFunc = 'MyFunction'
+    myFuncList.forEach(item => {
+      if (item.path === currentPath) {
+        curFunc = item.label
+      }
+    })
+    return curFunc
+  }, [funcList, currentPath])
 
-  const sort = useCallback(() => {
-    navigator('sort')
-  }, [])
+  // 根据路径切换下拉菜单选项
+  useEffect(() => {
+    if (currentPath === 'detail') {
+      navigate('/home/detail/basic')
+      return
+    }
+    // 设置功能列表
+    setFuncList({
+      items: myFuncList.filter(item => {
+        return item.path !== currentPath
+      }),
+      onClick: e => {
+        // 跳转到对应的界面
+        myFuncList.forEach(item => {
+          if ('' + item.key === e.key) {
+            navigate('/home/detail/' + item.path)
+          }
+        })
+      }
+    })
+  }, [currentPath])
+
+  // 在这里获取数据，覆盖式获取
+  useEffect(() => {}, [curRepoId])
+
+  const reSelect = useCallback(() => {
+    modal.confirm({
+      title: 'ReSelect Repo',
+      content: <RepoSearch />,
+      onOk: f => {
+        if (selectedList.size === 0) {
+          message.error({
+            content: 'At least one repo needs to be selected'
+          })
+        } else {
+          f()
+        }
+      },
+      cancelButtonProps: {
+        style: {
+          display: 'none'
+        }
+      }
+    })
+  }, [repoList])
+
   return (
     <div className={styles.RepoDetails}>
+      {contextHolder}
       <div className={styles.header}>
         <i
           onClick={() => {
-            navigator(-1)
+            navigate('/home/repo')
           }}
           className="iconfont icon-return"
         ></i>
-        <h2>Repository Details</h2>
+        {/* <h2>Repository Details</h2> */}
+        {currentPath === 'basic' ? (
+          <Dropdown menu={repoList}>
+            <Button>
+              <Space>
+                {curRepoName}
+                <DownOutlined />
+              </Space>
+            </Button>
+          </Dropdown>
+        ) : (
+          ''
+        )}
+
         <div></div>
         {currentPath !== 'sort' ? (
-          <Button style={{ marginRight: '10px' }} onClick={sort}>
-            sort
+          <Button style={{ marginRight: '10px' }} onClick={reSelect}>
+            Re-Select Repo
           </Button>
         ) : (
           ''
         )}
 
-        <Dropdown menu={menuProps}>
+        <Dropdown menu={funcList}>
           <Button>
             <Space>
-              More
+              {curFunc}
               <DownOutlined />
             </Space>
           </Button>
         </Dropdown>
       </div>
-      <MySlider>
-        <Outlet />
-      </MySlider>
+      <MySlider>{isLoading ? <Spin tip="Loading" className="Loading" size="large"></Spin> : <Outlet />}</MySlider>
+      {contexthandler}
     </div>
   )
 }

@@ -4,12 +4,12 @@ import { useLocation } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 
 export default () => {
+  console.log('Auth')
   const location = useLocation()
   const navigator = useNavigate()
   useEffect(() => {
     const temp = location.pathname.replace(/\/$/g, '').split('/')
     const lastPath = temp[temp.length - 1]
-    console.log(lastPath)
     switch (location.pathname) {
       case '/':
         navigator('/login')

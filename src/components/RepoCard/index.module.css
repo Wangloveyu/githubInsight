@@ -1,6 +1,14 @@
 .container {
   position: relative;
   padding-top: 2em;
+  width: fit-content;
+  height: fit-content;
+}
+
+.myCheckBox {
+  position: absolute;
+  top: calc(2em+10px);
+  left: calc(210px);
 }
 
 .RepoCard {

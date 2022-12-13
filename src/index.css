@@ -18,3 +18,22 @@ body {
 li {
   list-style-type: none;
 }
+
+.Loading {
+  margin: auto;
+}
+
+.Alert {
+  position: absolute;
+  z-index: 100;
+  top: 20px;
+  margin: auto;
+}
+
+.empty:empty {
+  content: 'empty';
+  background-image: url('./assets/images/NoData.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80% 80%;
+}

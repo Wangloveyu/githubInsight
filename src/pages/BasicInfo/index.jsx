@@ -3,15 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import TimeLine from '../../components/TimeLine'
 import CommitRank from '../../components/CommitRank'
 import CommitTimes from '../../components/CommitTimes'
+import CommitCompany from '../../components/CommitCompany'
 import styles from './index.module.css'
 import '../../assets/iconfont/iconfont.css'
-
-const basicData = {
-  commits: 234,
-  issue: 13,
-  star: 2820,
-  fork: 1270
-}
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import { message } from 'antd'
+import { Alert } from 'antd'
+import { notification } from 'antd'
+import { useAppContext } from '../../context/appContext'
 
 const HeaderCard = props => {
   return (
@@ -24,24 +24,47 @@ const HeaderCard = props => {
 }
 
 export default () => {
-  useState(() => {}, [])
-  const navigator = useNavigate()
+  const location = useLocation()
+  const navigate = useNavigate()
+  const [basicData, setBasicData] = useState({
+    commits: 0,
+    issues: 0,
+    stars: 0,
+    forks: 0
+  })
+  const { detail } = useAppContext()
+
+  useEffect(() => {
+    const { forks, stars, open_issues, timeline, language, commit_frequency, issue_frequency, contributors } = detail
+    let commits = 0
+    console.log(commit_frequency)
+    if (commit_frequency?.freq) {
+      Object.values(commit_frequency.freq).forEach(item => {
+        commits += parseInt(item)
+      })
+      setBasicData({ commits, issues: open_issues, stars, forks })
+    }
+  }, [detail])
 
   return (
     <>
       <div style={{ marginBottom: '20px', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
         <HeaderCard icon={'icon-git-commit'} color={'#c62828'} content={basicData.commits} type={'Commits'} />
-        <HeaderCard icon={'icon-issue-opened'} color={'#1565c0'} content={basicData.issue} type={'Issue'} />
-        <HeaderCard icon={'icon-star'} color={'#e65100'} content={basicData.star} type={'Star Number'} />
-        <HeaderCard icon={'icon-fork'} color={'#01579b'} content={basicData.fork} type={'Fork Number'} />
+        <HeaderCard icon={'icon-issue-opened'} color={'#1565c0'} content={basicData.issues} type={'Issue'} />
+        <HeaderCard icon={'icon-star'} color={'#e65100'} content={basicData.stars} type={'Star Number'} />
+        <HeaderCard icon={'icon-fork'} color={'#01579b'} content={basicData.forks} type={'Fork Number'} />
       </div>
       <div className={styles.dataContainer}>
-        <div style={{ width: '45%', height: '450px' }}>
+        <div style={{ width: '40%', height: '450px' }}>
           <CommitTimes />
         </div>
-        <div style={{ width: '40%' }}>
+        <div style={{ width: '50%' }}>
           <CommitRank />
         </div>
+      </div>
+
+      <div style={{ width: '100%', height: '450px', marginTop: '50px' }}>
+        <CommitCompany />
       </div>
       <TimeLine />
     </>

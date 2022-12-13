@@ -4,7 +4,8 @@
   line-height: 3em;
   background-color: white;
   padding: 5px;
-  display: block;
+  display: flex;
+  justify-content: space-between;
 }
 
 .ListItem > label {

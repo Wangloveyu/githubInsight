@@ -1,7 +1,9 @@
 .menuItem {
   cursor: pointer;
-  padding: 10px;
+  padding: 15px;
   margin: 5px;
+  font-size: 16px;
+  line-height: 100%;
 }
 
 .menuItem:hover {
@@ -10,8 +12,10 @@
 }
 
 .menuItem_chosen {
-  padding: 10px;
+  padding: 15px;
   margin: 5px;
   background-color: #bae0ff;
   border-radius: 5px;
+  font-size: 16px;
+  line-height: 100%;
 }

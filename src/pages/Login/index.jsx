@@ -5,32 +5,47 @@ import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { message } from 'antd'
 import { Card } from 'antd'
+import { useAppContext } from '../../context/appContext'
+import { useEffect } from 'react'
+import { Alert } from 'antd'
 
 const Login = () => {
-  const navigator = useNavigate()
+  const navigate = useNavigate()
   const [myForm] = Form.useForm()
+  const { user, isLoading, showAlert, alertType, alertText, displayAlert, registerUser, loginUser } = useAppContext()
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/home')
+      }, 500)
+    }
+  }, [user, navigate])
+
+  useEffect(() => {
+    if (showAlert) {
+      if (alertType === 'error') {
+        message.error({
+          content: alertText,
+          duration: 1
+        })
+      } else {
+        message.success({
+          content: alertText,
+          duration: 1
+        })
+      }
+    }
+  }, [showAlert])
   const onSubmit = () => {
     myForm
       .validateFields()
       .then(res => {
-        const data = JSON.parse(localStorage.getItem('userInfo'))
-        console.log(res, data)
-        if (res.username === data.username && res.password === data.password) {
-          console.log(res)
-          localStorage.setItem('login', true)
-          message.success({
-            content: 'login in successfully',
-            duration: 1,
-            onClose: () => {
-              navigator('/home')
-            }
-          })
-        } else {
-          message.error({ content: 'username or password is wrong', duration: 1 })
-        }
+        loginUser(res)
       })
       .catch(err => [message.error({ content: 'username or password is wrong', duration: 1 })])
   }
+
   return (
     <div className={styles.Register}>
       <Card
@@ -55,12 +70,16 @@ const Login = () => {
           autoComplete="off"
         >
           <Form.Item
-            label="Username"
-            name="username"
+            label="Email"
+            name="email"
             rules={[
               {
                 required: true,
                 message: 'Please input your username!'
+              },
+              {
+                type: 'email',
+                message: 'please input correct email'
               }
             ]}
           >
@@ -81,17 +100,6 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{
-              offset: 8,
-              span: 16
-            }}
-          >
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-
-          <Form.Item
             wrapperCol={{
               offset: 8,
               span: 16
@@ -99,11 +107,11 @@ const Login = () => {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <Button type="primary" onClick={onSubmit}>
-                Submit
+                Login
               </Button>
               <Button
                 onClick={() => {
-                  navigator('/register')
+                  navigate('/register')
                 }}
               >
                 Register

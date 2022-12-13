@@ -7,12 +7,14 @@ import { useEffect } from 'react'
 import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { useAppContext } from '../../context/appContext'
 const { Header, Content, Sider } = Layout
 
 const App = () => {
   const navigator = useNavigate()
+  const { user } = useAppContext()
   useEffect(() => {
-    if (!localStorage.getItem('login')) {
+    if (!user) {
       message.error({
         content: 'The user is not logged in',
         duration: 1,

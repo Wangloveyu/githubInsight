@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
+  gap: 20px;
 }
 .MyRepo > div:first-child {
   display: flex;
@@ -12,6 +13,6 @@
   justify-content: space-between;
 }
 
-.MyRepo > div > div {
+.MyRepo > div > h2 + div {
   flex: 1;
 }

@@ -3,6 +3,7 @@ import ListItem from '../../components/ListItem'
 import styles from './index.module.css'
 import React, { useState, useEffect } from 'react'
 import { PlusOutlined } from '@ant-design/icons'
+import { useAppContext } from '../../context/appContext'
 
 const { Option } = Select
 
@@ -15,18 +16,21 @@ const data = [
 export default () => {
   const [items, setItems] = useState([])
   const [open, setOpen] = useState(false)
+
+  const { user, repos } = useAppContext()
+
   const showDrawer = () => {
     setOpen(true)
   }
   const onClose = () => {
     setOpen(false)
   }
-
   const onSubmit = () => {
     setOpen(false)
   }
 
   useEffect(() => {
+    console.log(user)
     const temp = []
     let key = 0
     data.forEach(item => {
@@ -47,9 +51,9 @@ export default () => {
       <div className={styles.Info}>
         <img src="https://img2.baidu.com/it/u=1003272215,1878948666&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1670346000&t=600e74135b45cc8cd24140df44d4fc50"></img>
         <ul>
-          {items.map(item => {
-            return <ListItem key={item.key} item={item} />
-          })}
+          <ListItem item={{ title: 'UserName', content: JSON.stringify(user.userName) }} />
+          <ListItem item={{ title: 'Email', content: JSON.stringify(user.email) }} />
+          <ListItem item={{ title: 'Repo Number', content: repos.length }} />
         </ul>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Button onClick={showDrawer}>Update Info</Button>

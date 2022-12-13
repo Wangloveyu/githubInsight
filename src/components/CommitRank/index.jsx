@@ -2,24 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { Avatar, Divider, List, Skeleton } from 'antd'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import styles from './index.module.css'
+import { useAppContext } from '../../context/appContext'
 
 const App = () => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
+  const { isLoading, detail } = useAppContext()
   const loadMoreData = () => {
-    if (loading) {
+    if (isLoading || loading) {
       return
     }
     setLoading(true)
-    fetch('https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo')
-      .then(res => res.json())
-      .then(body => {
-        setData([...data, ...body.results])
-        setLoading(false)
-      })
-      .catch(() => {
-        setLoading(false)
-      })
+    if (detail && detail.contributors) setData([...data, ...detail.contributors.slice(data.length, data.length + 10)])
+    setLoading(false)
   }
   useEffect(() => {
     loadMoreData()
@@ -31,7 +26,7 @@ const App = () => {
         <InfiniteScroll
           dataLength={data.length}
           next={loadMoreData}
-          hasMore={data.length < 50}
+          hasMore={data.length < (detail?.contributors?.length || 0)}
           loader={
             <Skeleton
               avatar
@@ -56,14 +51,14 @@ const App = () => {
             }
             renderItem={(item, index) => {
               return (
-                <List.Item className={styles.listItemContainer} key={item.email}>
+                <List.Item className={styles.listItemContainer} key={item.created_at}>
                   <div>{index + 1}</div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <Avatar src={item.picture.large} />
-                    <div style={{ marginLeft: '1em' }}>{item.name.last}</div>
+                    <Avatar src={item.avatar_url} />
+                    <div style={{ marginLeft: '1em' }}>{item.name}</div>
                   </div>
 
-                  <div>{parseInt(Math.random() * 1000)}</div>
+                  <div>{item.contributions}</div>
                 </List.Item>
               )
             }}
