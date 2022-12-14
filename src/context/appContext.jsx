@@ -235,11 +235,9 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_FILTERS })
   }
 
-  let mySelectedList = new Set() // 保留一份引用，避免更新不及时
-
   const setSelectedRepos = selectedList => {
     console.log('分发值', selectedList)
-    mySelectedList = selectedList
+    // mySelectedList = [...selectedList]
     dispatch({
       type: SET_SELECTEDLIST,
       payload: {
@@ -249,13 +247,13 @@ const AppProvider = ({ children }) => {
   }
 
   const getAllSelectedReposInfo = async () => {
-    console.log('请求获取信息', state.details, mySelectedList)
+    console.log('请求获取信息', state.details, state.selectedList)
 
     try {
       dispatch({ type: GET_DETAILS_BEGIN })
       const details = state.details.filter(item => {
         let flag = false
-        mySelectedList.forEach(it => {
+        state.selectedList.forEach(it => {
           if (it.key === item._id) {
             flag = true
           }
@@ -263,7 +261,7 @@ const AppProvider = ({ children }) => {
         return flag
       })
       console.log(details)
-      const temp = [...mySelectedList]
+      const temp = [...state.selectedList]
       for (let q = 0; q < temp.length; q++) {
         const item = temp[q]
         console.log('item', item)

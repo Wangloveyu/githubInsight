@@ -86,6 +86,7 @@ export default () => {
           getDashBoard(e.key)
         }
       })
+      getAllSelectedReposInfo()
     } else {
       setCurRepoId('')
     }
@@ -155,7 +156,6 @@ export default () => {
 
   const onOk = f => {
     console.log(selectedList)
-    getAllSelectedReposInfo()
     f()
   }
 
