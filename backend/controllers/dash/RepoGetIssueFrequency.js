@@ -15,7 +15,7 @@ const RepoGetIssueFrequency = async (owner, name,octokit) => {
     );
   
     if (repoMessage.data.length == 0) return { 2021: "0", 2020: "0", 2019: "0" };
-    for (var i = 2; i <= 5; i++) {
+    for (var i = 2; ; i++) {
       const NextRepoMessage = await octokit.request(
         "GET /repos/{owner}/{repo}/issues",
         {
