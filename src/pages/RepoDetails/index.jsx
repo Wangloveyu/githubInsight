@@ -64,7 +64,6 @@ const myFuncList = [
 ]
 
 export default () => {
-  const [api, contextHolder] = notification.useNotification()
   const location = useLocation()
   const navigate = useNavigate()
   const [curRepoId, setCurRepoId] = useState('')

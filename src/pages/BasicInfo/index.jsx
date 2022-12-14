@@ -12,6 +12,7 @@ import { message } from 'antd'
 import { Alert } from 'antd'
 import { notification } from 'antd'
 import { useAppContext } from '../../context/appContext'
+import IssueCompany from '../../components/IssueCompany'
 
 const HeaderCard = props => {
   return (
@@ -39,9 +40,6 @@ export default () => {
     if (commit_frequency && commit_frequency.freq) {
       let commits = 0
       if (commit_frequency?.freq?.AllCommits) {
-        // Object.values(commit_frequency.freq).forEach(item => {
-        //   commits += parseInt(item)
-        // })
         commits = commit_frequency?.freq?.AllCommits.length
         setBasicData({ commits, issues: open_issues, stars, forks })
       }
@@ -67,6 +65,9 @@ export default () => {
 
       <div style={{ width: '100%', height: '450px', marginTop: '50px' }}>
         <CommitCompany />
+      </div>
+      <div style={{ width: '100%', height: '450px', marginTop: '50px' }}>
+        <IssueCompany />
       </div>
       <TimeLine />
     </>
