@@ -38,10 +38,11 @@ export default () => {
   useEffect(() => {
     if (commit_frequency && commit_frequency.freq) {
       let commits = 0
-      if (commit_frequency?.freq) {
-        Object.values(commit_frequency.freq).forEach(item => {
-          commits += parseInt(item)
-        })
+      if (commit_frequency?.freq?.AllCommits) {
+        // Object.values(commit_frequency.freq).forEach(item => {
+        //   commits += parseInt(item)
+        // })
+        commits = commit_frequency?.freq?.AllCommits.length
         setBasicData({ commits, issues: open_issues, stars, forks })
       }
     }

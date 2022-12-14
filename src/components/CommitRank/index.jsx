@@ -13,7 +13,7 @@ const App = () => {
       return
     }
     setLoading(true)
-    if (detail && detail.contributors) setData([...data, ...detail.contributors.slice(data.length, data.length + 10)])
+    if (detail?.contributors) setData([...data, ...detail.contributors.slice(data.length, data.length + 10)])
     setLoading(false)
   }
   useEffect(() => {

@@ -23,18 +23,27 @@ export default props => {
   const { detail } = useAppContext()
   useEffect(() => {
     console.log(detail)
-    if (detail?.timeline) {
+    if (detail?.timeline && detail?.commit_frequency?.freq?.AllCommits) {
       const newData = []
+      let cnt = 0
       Object.entries(detail.timeline).forEach(item => {
-        console.log(item[1].replaceAll(/([T])|(Z)/g, ' '))
+        cnt++
         newData.push({
           event: item[0],
           time: item[1].replaceAll(/([T])|(Z)/g, ' ')
         })
+        if (cnt == 1) {
+          detail?.commit_frequency?.freq?.AllCommits.forEach(commit => {
+            newData.push({
+              event: 'commit at',
+              time: commit.replaceAll(/([T])|(Z)/g, ' ')
+            })
+          })
+        }
       })
       setData(newData)
     }
-  }, [detail])
+  }, [detail?.timeline, detail?.commit_frequency?.freq])
   return (
     <div className={styles.TimeLine}>
       <h3

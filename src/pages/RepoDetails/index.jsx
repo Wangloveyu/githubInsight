@@ -35,11 +35,6 @@ const items = [
   }
 ]
 
-// 用于映射路径和功能
-const path2func = {
-  basic: 'Repo Info'
-}
-
 const myFuncList = [
   {
     key: 1,
@@ -80,10 +75,17 @@ export default () => {
   const { showAlert, isLoading, detail, getDashBoard, selectedList, getAllSelectedReposInfo } = useAppContext()
 
   useEffect(() => {
-    console.log('detail', detail)
-    if (!selectedList) return
+    console.log('detail', detail, selectedList)
     if (selectedList.size > 0) {
       setCurRepoId([...selectedList][0].key)
+      // 在这里设置仓库列表
+      setRepoList({
+        items: [...selectedList],
+        onClick: e => {
+          setCurRepoId(e.key)
+          getDashBoard(e.key)
+        }
+      })
     } else {
       setCurRepoId('')
     }
@@ -92,28 +94,8 @@ export default () => {
   useEffect(() => {
     if (curRepoId !== '') {
       const temp = [...selectedList]
-      if (temp.length === 0) {
-        api.error({
-          message: 'error',
-          description: '选择仓库列表不允许为空',
-          onClose: () => {
-            navigate('/home/repo')
-          },
-          duration: 2,
-          placement: 'top'
-        })
-      } else {
-        getAllSelectedReposInfo()
-        getDashBoard(temp[0].key)
-        // 在这里设置仓库列表
-        setRepoList({
-          items: [...selectedList],
-          onClick: e => {
-            setCurRepoId(e.key)
-            getDashBoard(e.key)
-          }
-        })
-      }
+      getAllSelectedReposInfo()
+      getDashBoard(temp[0].key)
     }
   }, [curRepoId])
 
@@ -171,33 +153,27 @@ export default () => {
     })
   }, [currentPath])
 
-  // 在这里获取数据，覆盖式获取
-  useEffect(() => {}, [curRepoId])
+  const onOk = f => {
+    console.log(selectedList)
+    getAllSelectedReposInfo()
+    f()
+  }
 
-  const reSelect = useCallback(() => {
+  const reSelect = () => {
     modal.confirm({
       title: 'ReSelect Repo',
       content: <RepoSearch />,
-      onOk: f => {
-        if (selectedList.size === 0) {
-          message.error({
-            content: 'At least one repo needs to be selected'
-          })
-        } else {
-          f()
-        }
-      },
+      onOk,
       cancelButtonProps: {
         style: {
           display: 'none'
         }
       }
     })
-  }, [repoList])
+  }
 
   return (
     <div className={styles.RepoDetails}>
-      {contextHolder}
       <div className={styles.header}>
         <i
           onClick={() => {

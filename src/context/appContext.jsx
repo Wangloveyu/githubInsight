@@ -235,8 +235,11 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_FILTERS })
   }
 
+  let mySelectedList = new Set() // 保留一份引用，避免更新不及时
+
   const setSelectedRepos = selectedList => {
     console.log('分发值', selectedList)
+    mySelectedList = selectedList
     dispatch({
       type: SET_SELECTEDLIST,
       payload: {
@@ -246,26 +249,40 @@ const AppProvider = ({ children }) => {
   }
 
   const getAllSelectedReposInfo = async () => {
-    console.log('请求获取信息', state.details)
+    console.log('请求获取信息', state.details, mySelectedList)
 
     try {
       dispatch({ type: GET_DETAILS_BEGIN })
-      const details = state.details
-
-      state.selectedList.forEach(async item => {
+      const details = state.details.filter(item => {
+        let flag = false
+        mySelectedList.forEach(it => {
+          if (it.key === item._id) {
+            flag = true
+          }
+        })
+        return flag
+      })
+      console.log(details)
+      const temp = [...mySelectedList]
+      for (let q = 0; q < temp.length; q++) {
+        const item = temp[q]
+        console.log('item', item)
         let flag = true
-        state.details.forEach(it => {
+        details.forEach(it => {
           console.log('对比', it._id, item.key)
           if (it._id === item.key) {
             flag = false
           }
         })
         if (flag) {
+          console.log('正在请求新数据')
           const { data } = await authFetch.post('/dashboard', { id: item.key })
           const { detail } = data
           details.push(detail)
+          console.log('数据请求完成', detail, details)
         }
-      })
+      }
+      console.log('currentDetails', details)
       dispatch({
         type: GET_DETAILS_SUCCESS,
         payload: {
@@ -273,6 +290,7 @@ const AppProvider = ({ children }) => {
         }
       })
     } catch (error) {
+      console.log(error)
       // logoutUser()
     }
   }

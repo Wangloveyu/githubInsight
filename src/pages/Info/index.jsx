@@ -55,12 +55,12 @@ export default () => {
           <ListItem item={{ title: 'Email', content: JSON.stringify(user.email) }} />
           <ListItem item={{ title: 'Repo Number', content: repos.length }} />
         </ul>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Button onClick={showDrawer}>Update Info</Button>
           <Button>Retrieve Password</Button>
-        </div>
+        </div> */}
       </div>
-      <Drawer
+      {/* <Drawer
         title="Update Information"
         width={720}
         onClose={onClose}
@@ -206,7 +206,7 @@ export default () => {
             </Col>
           </Row>
         </Form>
-      </Drawer>
+      </Drawer> */}
     </div>
   )
 }

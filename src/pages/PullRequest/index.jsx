@@ -17,7 +17,7 @@ const Echarts = () => {
       let tempCnt = 0
       Object.entries(item.pull_requests).forEach(l => {
         type.add(l[0])
-        tempCnt += parseInt(l[1].num)
+        tempCnt += parseInt(l[1])
       })
       totalCnt[item.name] = tempCnt
       nameData.push(item.name)
@@ -27,9 +27,9 @@ const Echarts = () => {
     details.forEach(item => {
       const temp = []
       yData.forEach(i => {
+        console.log(item.pull_requests[i])
         if (item.pull_requests[i]) {
-          console.log(item.pull_requests[i].num)
-          temp.push(parseInt((parseInt(item.pull_requests[i].num) / totalCnt[item.name]).toFixed(4) * 10000) / 100)
+          temp.push(parseInt((parseInt(item.pull_requests[i]) / totalCnt[item.name]).toFixed(4) * 10000) / 100)
         } else {
           temp.push(0)
         }

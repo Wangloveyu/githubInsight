@@ -7,7 +7,6 @@ import { useState } from 'react'
 import { useAppContext } from '../../context/appContext'
 
 export default props => {
-  console.log('RepoSearch')
   const [data, setData] = useState([
     {
       label: 'repoName',

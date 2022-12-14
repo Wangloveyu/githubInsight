@@ -1008,7 +1008,7 @@ export default () => {
   const chartRef = useRef()
 
   useEffect(() => {
-    if (commit_frequency && commit_frequency.orgs) {
+    if (commit_frequency?.orgs) {
       console.log('更新')
       const newTop = []
       const temp = []

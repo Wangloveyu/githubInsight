@@ -15,8 +15,8 @@ const Echarts = () => {
     let data = []
     let date = []
 
-    if (commit_frequency && commit_frequency.freq) {
-      Object.entries(commit_frequency.freq).map(item => {
+    if (commit_frequency && commit_frequency?.freq?.Day) {
+      Object.entries(commit_frequency.freq.Day).map(item => {
         date.push(item[0])
         data.push(item[1])
       })

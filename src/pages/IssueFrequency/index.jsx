@@ -6,16 +6,8 @@ import { useAppContext } from '../../context/appContext'
 const Echarts = () => {
   const chartRef = useRef()
   const { details } = useAppContext()
-  let base = +new Date(1988, 9, 3)
-  let oneDay = 24 * 3600 * 1000
-  let data = [[base, Math.random() * 300]]
-  for (let i = 1; i < 2000; i++) {
-    let now = new Date((base += oneDay))
-    data.push([+now, Math.round((Math.random() - 0.5) * 20 + data[i - 1][1])])
-  }
 
   useEffect(() => {
-    console.log(details)
     if (chartRef.current && details && details.length !== 0) {
       const chart = echarts.init(chartRef.current)
 
@@ -23,9 +15,11 @@ const Echarts = () => {
       const data = []
       const legand = []
       details.forEach(item => {
-        Object.entries(item.issue_frequency.freq).forEach(it => {
-          mySet.add(it[0])
-        })
+        if (item?.issue_frequency?.freq) {
+          Object.entries(item?.issue_frequency?.freq?.Day).forEach(it => {
+            mySet.add(it[0])
+          })
+        }
         legand.push(item.name)
       })
       const xData = [...mySet].sort()
@@ -33,8 +27,8 @@ const Echarts = () => {
       details.forEach(item => {
         const temp = []
         xData.forEach(it => {
-          if (item.issue_frequency.freq[it]) {
-            temp.push(item.issue_frequency.freq[it])
+          if (item?.issue_frequency?.freq?.Day[it]) {
+            temp.push(item.issue_frequency.freq.Day[it])
           } else {
             temp.push(0)
           }
@@ -102,7 +96,7 @@ const Echarts = () => {
         chart.dispose()
       }
     }
-  }, [chartRef.current, details])
+  }, [details])
 
   return (
     // 宽度要大，不然y轴有些名称可能不会显示

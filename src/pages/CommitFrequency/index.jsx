@@ -23,7 +23,8 @@ const Echarts = () => {
       const data = []
       const legand = []
       details.forEach(item => {
-        Object.entries(item.commit_frequency.freq).forEach(it => {
+        console.log(item.commit_frequency.freq)
+        Object.entries(item?.commit_frequency?.freq?.Day).forEach(it => {
           mySet.add(it[0])
         })
         legand.push(item.name)
@@ -33,8 +34,8 @@ const Echarts = () => {
       details.forEach(item => {
         const temp = []
         xData.forEach(it => {
-          if (item.commit_frequency.freq[it]) {
-            temp.push(item.commit_frequency.freq[it])
+          if (item?.commit_frequency?.freq?.Day[it]) {
+            temp.push(item.commit_frequency.freq.Day[it])
           } else {
             temp.push(0)
           }
@@ -52,7 +53,7 @@ const Echarts = () => {
 
       const option = {
         title: {
-          text: 'Issue Frequency'
+          text: 'Commit Frequency'
         },
         tooltip: {
           trigger: 'axis',
