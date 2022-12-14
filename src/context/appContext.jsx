@@ -169,6 +169,16 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  const updateRepo = async id => {
+    // dispatch({ type: GET_REPOS_BEGIN })
+    try {
+      const { data } = await authFetch.post('/update', { id })
+      console.log(data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const getRepos = async () => {
     dispatch({ type: GET_REPOS_BEGIN })
     try {
@@ -310,7 +320,8 @@ const AppProvider = ({ children }) => {
         changePage,
         clearFilters,
         setSelectedRepos,
-        getAllSelectedReposInfo
+        getAllSelectedReposInfo,
+        updateRepo
       }}
     >
       {children}

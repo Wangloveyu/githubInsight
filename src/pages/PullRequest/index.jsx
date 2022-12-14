@@ -38,9 +38,6 @@ const Echarts = () => {
         name: item.name,
         type: 'bar',
         stack: 'total',
-        label: {
-          show: true
-        },
         emphasis: {
           focus: 'series'
         },

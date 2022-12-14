@@ -71,7 +71,7 @@ export default () => {
   const [funcList, setFuncList] = useState({ items })
   const [modal, contexthandler] = Modal.useModal()
 
-  const { showAlert, isLoading, detail, getDashBoard, selectedList, getAllSelectedReposInfo } = useAppContext()
+  const { showAlert, isLoading, detail, getDashBoard, selectedList, getAllSelectedReposInfo, updateRepo } = useAppContext()
 
   useEffect(() => {
     console.log('detail', detail, selectedList)
@@ -202,6 +202,18 @@ export default () => {
         ) : (
           ''
         )}
+        <Button
+          disabled={!detail._id}
+          style={{ marginRight: '10px' }}
+          onClick={() => {
+            updateRepo(detail._id)
+            message.info({
+              content: 'Updating in the background, please refresh the interface later'
+            })
+          }}
+        >
+          Update
+        </Button>
 
         <Dropdown disabled={showAlert || isLoading} menu={funcList}>
           <Button>
