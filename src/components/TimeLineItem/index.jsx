@@ -6,9 +6,9 @@ export default props => {
   return (
     <div className={styles.container}>
       <div style={{ display: show ? 'block' : 'none' }} className={styles.window}>
-        <p>{props.item?.event}</p>
-        <p>{props.item?.actor}</p>
-        <p>{props.item?.time}</p>
+        <p>Event: {props.item?.event}</p>
+        {/* <p>{props.item?.actor}</p> */}
+        <p>Time: {props.item?.time}</p>
       </div>
       <div
         onMouseEnter={() => {

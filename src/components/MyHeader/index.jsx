@@ -9,7 +9,7 @@ import { useAppContext } from '../../context/appContext'
 
 export default props => {
   const navigator = useNavigate()
-  const { user } = useAppContext()
+  const { user, logoutUser } = useAppContext()
   const userName = useMemo(() => {
     return user?.userName
   }, [localStorage.getItem('user')])
@@ -18,7 +18,7 @@ export default props => {
       <h1>Hi, {userName}</h1>
       <Button
         onClick={() => {
-          localStorage.removeItem('user')
+          logoutUser()
           navigator('/login')
         }}
       >

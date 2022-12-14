@@ -32,17 +32,18 @@ export default () => {
     stars: 0,
     forks: 0
   })
-  const { detail } = useAppContext()
+  const { displayAlert, detail, showAlert } = useAppContext()
+  const { forks, stars, open_issues, timeline, language, commit_frequency, issue_frequency, contributors } = detail
 
   useEffect(() => {
-    const { forks, stars, open_issues, timeline, language, commit_frequency, issue_frequency, contributors } = detail
-    let commits = 0
-    console.log(commit_frequency)
-    if (commit_frequency?.freq) {
-      Object.values(commit_frequency.freq).forEach(item => {
-        commits += parseInt(item)
-      })
-      setBasicData({ commits, issues: open_issues, stars, forks })
+    if (commit_frequency && commit_frequency.freq) {
+      let commits = 0
+      if (commit_frequency?.freq) {
+        Object.values(commit_frequency.freq).forEach(item => {
+          commits += parseInt(item)
+        })
+        setBasicData({ commits, issues: open_issues, stars, forks })
+      }
     }
   }, [detail])
 

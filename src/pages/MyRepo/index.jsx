@@ -12,6 +12,7 @@ import RepoCard from '../../components/RepoCard'
 import { useAppContext } from '../../context/appContext'
 import styles from './index.module.css'
 import RepoSearch from '../../components/RepoSearch'
+import { message } from 'antd'
 
 const data = [
   { repoName: 'repoName', owner: 'fjlsdfjlksd', star: 100, importTime: '1999/12/10' },
@@ -40,7 +41,7 @@ export default () => {
   const navigate = useNavigate()
   // const [repos, setRepos] = useState([])
   const [mult, setMult] = useState(false)
-  const { deleteRepo, setSelectedRepos, importRepo, user, getRepos, repos, viewMyRepos, isLoading, search, page, numOfPages, showAlert } = useAppContext()
+  const { deleteRepo, setSelectedRepos, importRepo, user, getRepos, repos, viewMyRepos, isLoading, search, page, numOfPages, showAlert, alertType, alertText } = useAppContext()
 
   useEffect(() => {
     getRepos()
@@ -77,6 +78,15 @@ export default () => {
       }
     })
   }, [])
+
+  useEffect(() => {
+    if (showAlert) {
+      message.open({
+        content: alertText,
+        type: alertType
+      })
+    }
+  }, [showAlert])
 
   return (
     <div className={styles.MyRepo}>

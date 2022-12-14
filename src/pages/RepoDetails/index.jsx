@@ -77,7 +77,7 @@ export default () => {
   const [funcList, setFuncList] = useState({ items })
   const [modal, contexthandler] = Modal.useModal()
 
-  const { isLoading, detail, getDashBoard, selectedList, getAllSelectedReposInfo } = useAppContext()
+  const { showAlert, isLoading, detail, getDashBoard, selectedList, getAllSelectedReposInfo } = useAppContext()
 
   useEffect(() => {
     console.log('detail', detail)
@@ -207,7 +207,7 @@ export default () => {
         ></i>
         {/* <h2>Repository Details</h2> */}
         {currentPath === 'basic' ? (
-          <Dropdown menu={repoList}>
+          <Dropdown disabled={showAlert || isLoading || curRepoId === ''} menu={repoList}>
             <Button>
               <Space>
                 {curRepoName}
@@ -228,7 +228,7 @@ export default () => {
           ''
         )}
 
-        <Dropdown menu={funcList}>
+        <Dropdown disabled={showAlert || isLoading} menu={funcList}>
           <Button>
             <Space>
               {curFunc}
@@ -237,7 +237,7 @@ export default () => {
           </Button>
         </Dropdown>
       </div>
-      <MySlider>{isLoading ? <Spin tip="Loading" className="Loading" size="large"></Spin> : <Outlet />}</MySlider>
+      <MySlider>{isLoading || showAlert ? <Spin tip="Loading" className="Loading" size="large"></Spin> : <Outlet />}</MySlider>
       {contexthandler}
     </div>
   )

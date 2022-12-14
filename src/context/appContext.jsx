@@ -156,7 +156,8 @@ const AppProvider = ({ children }) => {
         .catch(err => {
           console.log('失败', err)
           dispatch({
-            type: IMPORT_REPO_SUCCESS
+            type: IMPORT_REPO_ERROR,
+            payload: { msg: err?.response?.data?.response?.data?.message }
           })
           clearAlert()
         })
