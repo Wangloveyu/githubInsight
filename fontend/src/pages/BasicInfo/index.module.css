@@ -1,0 +1,29 @@
+.dataContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.HeaderCard {
+  background-color: white;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+.HeaderCard > h2 {
+  font-weight: bolder;
+}
+
+.HeaderCard > i {
+  height: 50px;
+  width: 50px;
+  font-size: 20px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 100%;
+  margin: 20px 0;
+}
