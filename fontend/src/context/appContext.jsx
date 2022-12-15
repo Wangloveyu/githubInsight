@@ -138,13 +138,19 @@ const AppProvider = ({ children }) => {
     dispatch({ type: IMPORT_REPO_BEGIN })
     try {
       const { user } = state
+      const { userName } = user
       const { owner, repoName } = repoInfo
+      console.log({
+        owner,
+        repoName,
+        user: userName
+      })
 
       authFetch
         .post('/import', {
           owner,
           repoName,
-          user
+          user: userName
         })
         .then(res => {
           console.log('成功', res)
