@@ -1,4 +1,5 @@
 const RepoGetLanguage = async (owner, name,octokit) => {
+   console.log("Getting Languages");
     const repoMessage = await octokit.request(
       "GET /repos/{owner}/{repo}/languages",
       {

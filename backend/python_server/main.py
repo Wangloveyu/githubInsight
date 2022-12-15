@@ -13,12 +13,14 @@ userName = "RK_PHG"
 token = "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"
 def GetURL(arr,url): 
   print(url)
+  if url=="company": 
+      return
   try:  
     resp = requests.get(url=url,auth=(userName,token)).json()
     data = resp["company"]
   except Exception as e:
     print(e)
-    data = None
+    data = 0
   finally:
     arr.append(data)
   time.sleep(1)
@@ -34,7 +36,7 @@ def getUrls(urls):
          break 
     trueRes = []
     for i in result:
-      if result is not None:
+      if i!=0:
         trueRes.append(i)
     return trueRes
 

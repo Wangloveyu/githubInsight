@@ -1,4 +1,5 @@
 const RepoGetContributors = async (owner, name, octokit) => {
+  console.log("Getting Contributors...");
   const repoMessage = await octokit.request(
     "GET /repos/{owner}/{repo}/contributors",
     {

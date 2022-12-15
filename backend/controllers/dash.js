@@ -9,7 +9,6 @@ const octokit = new Octokit({
 })
 
 const AddRepo = async (owner, repo, user) => {
-  console.log('Getting Message...')
   var newRepo = {}
   try {
     const repoMessage = await octokit.request('GET /repos/{owner}/{repo}', {
@@ -24,7 +23,7 @@ const AddRepo = async (owner, repo, user) => {
       forks: repoMessage.data.forks,
       stars: repoMessage.data.watchers,
       open_issues: repoMessage.data.open_issues,
-    //  commit_frequency: await RepoGetCommitFrequency(repoMessage.data.owner.login, repoMessage.data.name, octokit),
+      commit_frequency: await RepoGetCommitFrequency(repoMessage.data.owner.login, repoMessage.data.name, octokit),
       issue_frequency: await RepoGetIssueFrequency(repoMessage.data.owner.login, repoMessage.data.name, octokit),
       contributors: await RepoGetContributors(repoMessage.data.owner.login, repoMessage.data.name, octokit),
       timeline: {
@@ -38,24 +37,21 @@ const AddRepo = async (owner, repo, user) => {
     }
   } catch (err) {
     console.log(err)
-    newRepo = "err";
+    newRepo = 'err'
   }
   return newRepo
 }
 
 const GetMessage = async (req, res) => {
   console.log('Getting Message...')
-  console.log('Getting Message...')
   var newRepo = {}
-  try{
+  try {
     newRepo = await AddRepo(req.body.owner, req.body.repoName, req.body.user)
-  }catch(err){}
-  if(newRepo!=="err"){
+  } catch (err) {}
+  if (newRepo !== 'err') {
     await RepoSchema.create(newRepo)
     res.status(201).json({ status: 'success!' })
-  }
-  else
-    res.status(404).json({err:"server err"})
+  } else res.status(404).json({ err: 'server err' })
 }
 
 const SearchRepoName = async (req, res) => {

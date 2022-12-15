@@ -1,12 +1,3 @@
-const TransDate = (date) => {
-    year = date.substring(0, 4);
-    month = date.substring(5, 7);
-    year1 = parseInt(year, 10);
-    month1 = parseInt(month, 10);
-    return (year1 - 2000) * 12 + month1 - 1;
-  };
-  
-  
 /** sort comany numbers */
 const SortCompanyNumbers = (comanys) => {
     var orgs = []
@@ -30,28 +21,28 @@ const SortCompanyNumbers = (comanys) => {
     return orgs;
 }
 
-function TypeMatch(input,allContents){
-  const set1 = new Set();
-  var flag = false
-  allContents.split(/\n/).forEach(line =>{
-      var pos = line.indexOf('-')
-      if(pos>0){
-          var tag = line.substring(0,pos)
-          var type = line.substring(pos+1)
-          if(input.match(tag)){
-              set1.add(type)
-              flag = true
-          }
-      }
-  });
-  if(flag == false){
-      set1.add('no-design')
+ 
+const uniqueEle = (arr) => {
+  ret = {}
+  map = new Map
+  for (var i = 0; i < arr.length; i++) {
+    if (map.has(arr[i])) {
+      const obj = map.get(arr[i])
+      obj.num++
+      map.set(arr[i], obj)
+    }
+    else {
+      map.set(arr[i], { num: 1, company: null })
+    }
   }
-  return set1
+  for (pair of map) {
+    ret[pair[0]] = pair[1]
+  }
+  return ret
 }
 
   
 module.exports = {
-  TransDate,
+  uniqueEle,
   SortCompanyNumbers
 }

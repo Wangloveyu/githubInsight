@@ -1,4 +1,5 @@
 const RepoGetReleaseTime = async (owner, name,octokit) => {
+  console.log("Getting TimeLines...");
     const repoMessage = await octokit.request(
       "GET /repos/{owner}/{repo}/releases",
       {
