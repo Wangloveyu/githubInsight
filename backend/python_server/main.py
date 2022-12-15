@@ -10,12 +10,14 @@ app = Flask(__name__)
 CORS(app, supports_credentials=True)
 Lock = threading.Lock
 userName = "RK_PHG"
-token = "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"
+token = "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"
 def GetURL(arr,url): 
+  print(url)
   try:  
     resp = requests.get(url=url,auth=(userName,token)).json()
     data = resp["company"]
-  except:
+  except Exception as e:
+    print(e)
     data = None
   finally:
     arr.append(data)
@@ -24,13 +26,17 @@ def GetURL(arr,url):
 # 100 threads for url requests
 def getUrls(urls):
     result = []
-    Pool = ThreadPoolExecutor(50)
+    Pool = ThreadPoolExecutor(100)
     for url in urls:
         Pool.submit(GetURL,result,url,) 
     while True:
       if len(result)==len(urls):
          break 
-    return result
+    trueRes = []
+    for i in result:
+      if result is not None:
+        trueRes.append(i)
+    return trueRes
 
 @app.route("/")
 def getCompanys():

@@ -5,7 +5,7 @@ const res = require('express/lib/response')
 const { RepoGetPullRequests, RepoGetCommitFrequency, RepoGetContributors, RepoGetIssueFrequency, RepoGetLanguage, RepoGetReleaseTime } = require('./dash/index')
 
 const octokit = new Octokit({
-  auth: `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`
+  auth: `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`
 })
 
 const AddRepo = async (owner, repo, user) => {
@@ -20,11 +20,11 @@ const AddRepo = async (owner, repo, user) => {
       base: repoMessage,
       name: repoMessage.data.name, // name
       owner: repoMessage.data.owner.login, // login
-      uploader: user.userName, // user
+      uploader: user, // user
       forks: repoMessage.data.forks,
       stars: repoMessage.data.watchers,
       open_issues: repoMessage.data.open_issues,
-      commit_frequency: await RepoGetCommitFrequency(repoMessage.data.owner.login, repoMessage.data.name, octokit),
+    //  commit_frequency: await RepoGetCommitFrequency(repoMessage.data.owner.login, repoMessage.data.name, octokit),
       issue_frequency: await RepoGetIssueFrequency(repoMessage.data.owner.login, repoMessage.data.name, octokit),
       contributors: await RepoGetContributors(repoMessage.data.owner.login, repoMessage.data.name, octokit),
       timeline: {

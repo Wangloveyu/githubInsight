@@ -16,7 +16,7 @@ const RepoGetIssueFrequency = async (owner, name,octokit) => {
   
     if (repoMessage.data.length == 0) return { 2021: "0", 2020: "0", 2019: "0" };
     for (var i = 2;  ; i++) {
-      console.log(1);
+ 
       const NextRepoMessage = await octokit.request(
         "GET /repos/{owner}/{repo}/issues",
         {
@@ -29,48 +29,66 @@ const RepoGetIssueFrequency = async (owner, name,octokit) => {
       if (NextRepoMessage.data.length == 0) break;
       else repoMessage.data = repoMessage.data.concat(NextRepoMessage.data);
     }
-    console.log(1);
+ 
   
     var orgs = [];
-    var urls = []
-    try {
-      /** analysis the company info */
-      for (var i = 1;   
-               i < repoMessage.data.length<1000?repoMessage.data.length:1000; 
-               i++) {
-        var url = repoMessage.data[i].user.url;
-        // await octokit.request(
-        //   "GET /users/{login}",
-        //   {
-        //     login: login
-        //   }
-        // ).then(
-        //     res=>{
-        //         if(res.data.company)
-        //           orgs.push(res.data.company.toLowerCase().replace("@","").trim()) 
-        //     });
-        // }
+  var urls = []
+  /* concurrent spider */
+  try {
+ 
+    /** analysis the company info */
+    const length = repoMessage.data.length < 1000 ? repoMessage.data.length : 1000
+    for (var i = 1; i < length; i++) {
+ 
+      try {
+        var url = repoMessage.data[i].user["url"];
         urls.push(url);
+      } catch (err) { }
+    }
+ 
+    if (urls.length != 0) {
+      var res = [];
+ 
+      try {
+        const resp = await axios.get("http://127.0.0.1:5000/", {
+          params: {
+            urls: JSON.stringify(urls)
+          }
+        });
+        res = resp.data
+
+      } catch (err) {
+        console.log(err)
+        res = []
+      } finally {
+        orgs = res;
+        console.log(orgs)
       }
-      if (urls.length != 0) {
-        var res = [];
-        try {
-          const resp = await axios.get("http://127.0.0.1:5000/", {
-            params: {
-              urls: JSON.stringify(urls)
-            }
-          });
-          res = resp.data
-  
-        }catch(err){
-           res = []   
-        }finally{
-          orgs = res;
-          console.log(orgs)
+    }
+  } catch (err) {
+    console.log(err)
+  }
+  orgs = orgs.filter(o=>o!==null);
+ 
+  /** one thread */
+  if (orgs.length == 0) {
+    var length = urls.length<50?urls.length:50
+    for (var i = 0; i < length; i++)/* */ {
+      var login = urls[i].split("/");
+      login = login[login.length - 1];
+      console.log(login);
+      await octokit.request(
+        "GET /users/{login}",
+        {
+          login: login
         }
+      ).then(
+        res => {
+          if (res.data.company)
+            orgs.push(res.data.company.toLowerCase().replace("@", "").trim())
+        });
       }
-    } catch (err) { }
-    
+    }
     orgs = orgs.filter(res=>res!==null);
     orgs = orgs.map(org=>org.toLowerCase().trim().replace("@",""));
     
@@ -84,7 +102,7 @@ const RepoGetIssueFrequency = async (owner, name,octokit) => {
       "freq": {
           "Day": CountDayIssue(repoMessage),
           "Month":  CountMonthIssue(t1, t2, repoMessage.data),
-          "Year": CountYearIssue(year1, year2, repoMessage.data),
+  
           "AllCommits":RecordAllIssuesTime(repoMessage.data),
        }
     };
