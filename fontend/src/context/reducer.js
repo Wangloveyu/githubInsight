@@ -183,7 +183,7 @@ const reducer = (state, action) => {
     return { ...state, search: '', searchStatus: 'all', searchType: 'all' }
   }
   if (action.type === SET_SELECTEDLIST) {
-    return { ...state, selectedList: new Set([...action.payload.selectedList]) }
+    return { ...state, selectedList: new Set([...action.payload.selectedList]), showAlert: false }
   }
 
   throw new Error(`no such action : ${action}`)

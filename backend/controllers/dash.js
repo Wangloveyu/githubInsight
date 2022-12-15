@@ -5,7 +5,7 @@ const res = require('express/lib/response')
 const { RepoGetPullRequests, RepoGetCommitFrequency, RepoGetContributors, RepoGetIssueFrequency, RepoGetLanguage, RepoGetReleaseTime } = require('./dash/index')
 
 const octokit = new Octokit({
-  auth: `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`
+  auth: `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`
 })
 
 const AddRepo = async (owner, repo, user) => {
@@ -20,7 +20,7 @@ const AddRepo = async (owner, repo, user) => {
       base: repoMessage,
       name: repoMessage.data.name, // name
       owner: repoMessage.data.owner.login, // login
-      uploader: user.userName, // user
+      uploader: user, // user
       forks: repoMessage.data.forks,
       stars: repoMessage.data.watchers,
       open_issues: repoMessage.data.open_issues,

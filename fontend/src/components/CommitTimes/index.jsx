@@ -48,7 +48,7 @@ const Echarts = () => {
       },
       series: [
         {
-          name: 'Commit Time',
+          name: 'Commits',
           type: 'line',
           symbol: 'none',
           sampling: 'lttb',

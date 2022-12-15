@@ -10,12 +10,13 @@ const App = () => {
   const { isLoading, detail } = useAppContext()
   const loadMoreData = () => {
     setLoading(true)
-    if (detail?.contributors) setData([...data, ...detail.contributors.slice(data.length, data.length + 10)])
+    if (detail?.contributors) setData(prev => [...prev, ...detail.contributors.slice(prev.length, prev.length + 10)])
     setLoading(false)
   }
   useEffect(() => {
+    setData([])
     loadMoreData()
-  }, [])
+  }, [detail])
   return (
     <div style={{ height: '450px', width: '100%', display: 'flex', flexDirection: 'column' }}>
       <h1 style={{ fontWeight: 'bolder', color: '#464646', fontSize: '18px' }}>Commit Rank</h1>
