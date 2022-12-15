@@ -14,7 +14,7 @@ import { useEffect } from 'react'
 const Register = () => {
   const navigate = useNavigate()
   const [myForm] = Form.useForm()
-  const { user, isLoading, showAlert, displayAlert, registerUser, loginUser } = useAppContext()
+  const { user, isLoading, showAlert, alertText, alertType, displayAlert, registerUser, loginUser } = useAppContext()
 
   useEffect(() => {
     if (user) {
@@ -51,6 +51,15 @@ const Register = () => {
         console.log(err)
       })
   }, [])
+
+  useEffect(() => {
+    if (showAlert) {
+      message.open({
+        type: alertType,
+        content: alertText
+      })
+    }
+  }, [showAlert])
 
   return (
     <div className={styles.Register}>

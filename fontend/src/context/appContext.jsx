@@ -69,7 +69,7 @@ const AppProvider = ({ children }) => {
       dispatch({
         type: CLEAR_ALERT
       })
-    }, 3000)
+    }, 1500)
   }
 
   const handleChange = ({ name, value }) => {
@@ -138,13 +138,19 @@ const AppProvider = ({ children }) => {
     dispatch({ type: IMPORT_REPO_BEGIN })
     try {
       const { user } = state
+      const { userName } = user
       const { owner, repoName } = repoInfo
+      console.log({
+        owner,
+        repoName,
+        user: userName
+      })
 
       authFetch
         .post('/import', {
           owner,
           repoName,
-          user
+          user: userName
         })
         .then(res => {
           console.log('成功', res)
@@ -167,6 +173,7 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg }
       })
     }
+    clearAlert()
   }
 
   const updateRepo = async id => {
