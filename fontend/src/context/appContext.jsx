@@ -69,7 +69,7 @@ const AppProvider = ({ children }) => {
       dispatch({
         type: CLEAR_ALERT
       })
-    }, 3000)
+    }, 1500)
   }
 
   const handleChange = ({ name, value }) => {
@@ -173,6 +173,7 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg }
       })
     }
+    clearAlert()
   }
 
   const updateRepo = async id => {
