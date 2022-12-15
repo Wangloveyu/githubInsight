@@ -182,7 +182,7 @@ export default () => {
         ></i>
         {/* <h2>Repository Details</h2> */}
         {currentPath === 'basic' ? (
-          <Dropdown disabled={showAlert || isLoading || curRepoId === ''} menu={repoList}>
+          <Dropdown disabled={isLoading || curRepoId === ''} menu={repoList}>
             <Button>
               <Space>
                 {curRepoName}
@@ -215,7 +215,7 @@ export default () => {
           Update
         </Button>
 
-        <Dropdown disabled={showAlert || isLoading} menu={funcList}>
+        <Dropdown disabled={isLoading} menu={funcList}>
           <Button>
             <Space>
               {curFunc}
@@ -224,7 +224,7 @@ export default () => {
           </Button>
         </Dropdown>
       </div>
-      <MySlider>{isLoading || showAlert ? <Spin tip="Loading" className="Loading" size="large"></Spin> : <Outlet />}</MySlider>
+      <MySlider>{isLoading ? <Spin tip="Loading" className="Loading" size="large"></Spin> : <Outlet />}</MySlider>
       {contexthandler}
     </div>
   )

@@ -9,9 +9,6 @@ const App = () => {
   const [data, setData] = useState([])
   const { isLoading, detail } = useAppContext()
   const loadMoreData = () => {
-    if (isLoading || loading) {
-      return
-    }
     setLoading(true)
     if (detail?.contributors) setData([...data, ...detail.contributors.slice(data.length, data.length + 10)])
     setLoading(false)

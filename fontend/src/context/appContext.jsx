@@ -69,7 +69,7 @@ const AppProvider = ({ children }) => {
       dispatch({
         type: CLEAR_ALERT
       })
-    }, 1500)
+    }, 500)
   }
 
   const handleChange = ({ name, value }) => {
@@ -157,13 +157,14 @@ const AppProvider = ({ children }) => {
           dispatch({
             type: IMPORT_REPO_SUCCESS
           })
+          clearAlert()
           getRepos()
         })
         .catch(err => {
           console.log('失败', err)
           dispatch({
             type: IMPORT_REPO_ERROR,
-            payload: { msg: err?.response?.data?.response?.data?.message }
+            payload: { msg: err?.response?.data?.err }
           })
           clearAlert()
         })
@@ -172,8 +173,8 @@ const AppProvider = ({ children }) => {
         type: IMPORT_REPO_ERROR,
         payload: { msg: error.response.data.msg }
       })
+      clearAlert()
     }
-    clearAlert()
   }
 
   const updateRepo = async id => {

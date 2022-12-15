@@ -55,10 +55,10 @@ export default () => {
         <HeaderCard icon={'icon-fork'} color={'#01579b'} content={basicData.forks} type={'Fork Number'} />
       </div>
       <div className={styles.dataContainer}>
-        <div style={{ width: '40%', height: '450px' }}>
+        <div style={{ width: '45%', height: '450px' }}>
           <CommitTimes />
         </div>
-        <div style={{ width: '50%' }}>
+        <div style={{ width: '45%' }}>
           <CommitRank />
         </div>
       </div>
