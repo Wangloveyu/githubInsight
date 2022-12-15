@@ -153,16 +153,10 @@ export default () => {
     })
   }, [currentPath])
 
-  const onOk = f => {
-    console.log(selectedList)
-    f()
-  }
-
   const reSelect = () => {
     modal.confirm({
       title: 'ReSelect Repo',
       content: <RepoSearch />,
-      onOk,
       cancelButtonProps: {
         style: {
           display: 'none'

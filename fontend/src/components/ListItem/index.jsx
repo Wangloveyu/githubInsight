@@ -4,7 +4,6 @@ const handleString = str => {
 }
 
 export default props => {
-  console.log(props.item.content)
   return (
     <li className={styles.ListItem}>
       <label>{props.item.title}:</label>

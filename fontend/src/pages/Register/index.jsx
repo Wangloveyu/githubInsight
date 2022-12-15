@@ -44,12 +44,9 @@ const Register = () => {
         registerUser(currentUser)
       })
       .catch(err => {
-        console.log(err)
         message.error('Register Fail')
       })
-      .catch(err => {
-        console.log(err)
-      })
+      .catch(err => {})
   }, [])
 
   useEffect(() => {

@@ -20,9 +20,9 @@ const timeEvents = [
 export default props => {
   const [show, setShow] = useState(false)
   const [data, setData] = useState(timeEvents)
+  const [allCommitData, setAllCommitData] = useState([])
   const { detail } = useAppContext()
   useEffect(() => {
-    console.log(detail)
     if (detail?.timeline && detail?.commit_frequency?.freq?.AllCommits) {
       const newData = []
       let cnt = 0
@@ -41,9 +41,18 @@ export default props => {
           })
         }
       })
-      setData(newData)
+      setAllCommitData(newData)
+      setData(newData.slice(0, 1000))
     }
   }, [detail?.timeline, detail?.commit_frequency?.freq])
+
+  const loadMore = () => {
+    if (data.length >= allCommitData.length) {
+      return
+    } else {
+      setData([...data, ...allCommitData.slice(data.length, data.length + 1000)])
+    }
+  }
   return (
     <div className={styles.TimeLine}>
       <h3
@@ -55,7 +64,15 @@ export default props => {
       >
         {<i className={`iconfont ${show ? 'icon-down' : 'icon-right'}`}></i>}TimeLine
       </h3>
-      <div className={styles.content} style={show ? {} : { height: '0px' }}>
+      <div
+        onScroll={e => {
+          if (parseFloat(e.target.scrollLeft) + parseFloat(e.target.clientWidth) + 1000 >= parseFloat(e.target.scrollWidth)) {
+            loadMore()
+          }
+        }}
+        className={styles.content}
+        style={show ? {} : { height: '0px' }}
+      >
         {data.map((item, index) => {
           return <TimeLineItem key={index} item={item} />
         })}

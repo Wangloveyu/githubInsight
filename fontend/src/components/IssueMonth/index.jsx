@@ -8,7 +8,6 @@ const Echarts = () => {
   const { details } = useAppContext()
 
   useEffect(() => {
-    console.log(details)
     if (chartRef.current && details && details.length !== 0) {
       const chart = echarts.init(chartRef.current)
 
@@ -16,7 +15,6 @@ const Echarts = () => {
       const data = []
       const legand = []
       details.forEach(item => {
-        console.log(item)
         if (item?.issue_frequency?.freq?.Month) {
           Object.entries(item?.issue_frequency?.freq?.Month).forEach(it => {
             mySet.add(it[0])

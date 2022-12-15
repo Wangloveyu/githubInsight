@@ -1000,7 +1000,6 @@ jsonlist.push(
 )
 
 export default () => {
-  console.log('CommitTimes')
   const [top10, setTop10] = useState([])
   const [allData, setAllData] = useState([])
   const { detail } = useAppContext()
@@ -1009,7 +1008,6 @@ export default () => {
 
   useEffect(() => {
     if (commit_frequency?.orgs) {
-      console.log('更新')
       const newTop = []
       const temp = []
       commit_frequency.orgs.forEach(item => {

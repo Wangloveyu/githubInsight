@@ -101,7 +101,6 @@ const AppProvider = ({ children }) => {
 
   const loginUser = async currentUser => {
     dispatch({ type: LOGIN_USER_BEGIN })
-    console.log(currentUser)
     try {
       const { data } = await authFetch.post('/login', currentUser)
       const { name } = data
@@ -113,7 +112,6 @@ const AppProvider = ({ children }) => {
 
       addUserToLocalStorage({ userName: name, email })
     } catch (error) {
-      console.log(error.response)
       dispatch({
         type: LOGIN_USER_ERROR,
         payload: { msg: error.response.data.msg }
@@ -140,11 +138,6 @@ const AppProvider = ({ children }) => {
       const { user } = state
       const { userName } = user
       const { owner, repoName } = repoInfo
-      console.log({
-        owner,
-        repoName,
-        user: userName
-      })
 
       authFetch
         .post('/import', {

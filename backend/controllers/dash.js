@@ -5,7 +5,7 @@ const res = require('express/lib/response')
 const { RepoGetPullRequests, RepoGetCommitFrequency, RepoGetContributors, RepoGetIssueFrequency, RepoGetLanguage, RepoGetReleaseTime } = require('./dash/index')
 
 const octokit = new Octokit({
-  auth: `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`
+  auth: `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`
 })
 
 const AddRepo = async (owner, repo, user) => {

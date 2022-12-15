@@ -27,7 +27,6 @@ const Echarts = () => {
     details.forEach(item => {
       const temp = []
       yData.forEach(i => {
-        console.log(item.pull_requests[i])
         if (item.pull_requests[i]) {
           temp.push(parseInt((parseInt(item.pull_requests[i]) / totalCnt[item.name]).toFixed(4) * 10000) / 100)
         } else {
@@ -50,8 +49,6 @@ const Echarts = () => {
         }
       })
     })
-    console.log(data)
-    console.log(details)
     const option = {
       tooltip: {
         trigger: 'axis',

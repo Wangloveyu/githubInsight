@@ -21,7 +21,6 @@ export default () => {
 
   useEffect(() => {
     if (issue_frequency?.orgs) {
-      console.log('更新')
       const newTop = []
       const temp = []
       issue_frequency.orgs.forEach(item => {

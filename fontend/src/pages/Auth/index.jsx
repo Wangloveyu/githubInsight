@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 
 export default () => {
-  console.log('Auth')
   const location = useLocation()
   const navigator = useNavigate()
   useEffect(() => {
