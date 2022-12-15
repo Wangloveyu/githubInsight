@@ -10,7 +10,7 @@ app = Flask(__name__)
 CORS(app, supports_credentials=True)
 Lock = threading.Lock
 userName = "RK_PHG"
-token = "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"
+token = "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"
 def GetURL(arr,url): 
   try:  
     resp = requests.get(url=url,auth=(userName,token)).json()

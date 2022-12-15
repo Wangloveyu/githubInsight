@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "all":"concurrently \"python .\\python_server\\main.py \" \"npm start \" "
+    "all": "concurrently \"python .\\python_server\\main.py \" \"npm start \" "
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +16,7 @@
     "cors": "^2.8.5",
     "dependencies": "^0.0.1",
     "dotenv": "^10.0.0",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "helmet": "^4.6.0",
     "mongodb": "^4.12.1",
     "mongoose": "^6.1.2",

@@ -5,7 +5,7 @@ const res = require('express/lib/response')
 const { RepoGetPullRequests, RepoGetCommitFrequency, RepoGetContributors, RepoGetIssueFrequency, RepoGetLanguage, RepoGetReleaseTime } = require('./dash/index')
 
 const octokit = new Octokit({
-  auth: `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`
+  auth: `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`
 })
 
 const AddRepo = async (owner, repo, user) => {
@@ -20,7 +20,7 @@ const AddRepo = async (owner, repo, user) => {
       base: repoMessage,
       name: repoMessage.data.name, // name
       owner: repoMessage.data.owner.login, // login
-      uploader: user, // user
+      uploader: user.userName, // user
       forks: repoMessage.data.forks,
       stars: repoMessage.data.watchers,
       open_issues: repoMessage.data.open_issues,
@@ -38,22 +38,24 @@ const AddRepo = async (owner, repo, user) => {
     }
   } catch (err) {
     console.log(err)
+    newRepo = "err";
   }
   return newRepo
 }
 
 const GetMessage = async (req, res) => {
   console.log('Getting Message...')
-  try {
-    const newRepo = await AddRepo(req.body.owner, req.body.repoName, req.body.user)
-    console.log(newRepo)
-    // console.log(newRepo);
+  console.log('Getting Message...')
+  var newRepo = {}
+  try{
+    newRepo = await AddRepo(req.body.owner, req.body.repoName, req.body.user)
+  }catch(err){}
+  if(newRepo!=="err"){
     await RepoSchema.create(newRepo)
     res.status(201).json({ status: 'success!' })
-  } catch (err) {
-    console.log(err)
-    res.status(404).json(err)
   }
+  else
+    res.status(404).json({err:"server err"})
 }
 
 const SearchRepoName = async (req, res) => {
