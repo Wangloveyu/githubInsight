@@ -20,7 +20,7 @@ const AddRepo = async (owner, repo, user) => {
       base: repoMessage,
       name: repoMessage.data.name, // name
       owner: repoMessage.data.owner.login, // login
-      uploader: user, // user
+      uploader: user.userName, // user
       forks: repoMessage.data.forks,
       stars: repoMessage.data.watchers,
       open_issues: repoMessage.data.open_issues,
@@ -38,23 +38,21 @@ const AddRepo = async (owner, repo, user) => {
     }
   } catch (err) {
     console.log(err)
+    newRepo = 'err'
   }
   return newRepo
 }
 
 const GetMessage = async (req, res) => {
   console.log('Getting Message...')
-  console.log(req.body.owner, req.body.repoName, req.body.user)
+  var newRepo = {}
   try {
-    const newRepo = await AddRepo(req.body.owner, req.body.repoName, req.body.user)
-    console.log(newRepo)
-    // console.log(newRepo);
+    newRepo = await AddRepo(req.body.owner, req.body.repoName, req.body.user)
+  } catch (err) {}
+  if (newRepo !== 'err') {
     await RepoSchema.create(newRepo)
     res.status(201).json({ status: 'success!' })
-  } catch (err) {
-    console.log(err)
-    res.status(404).json(err)
-  }
+  } else res.status(404).json({ err: 'server err' })
 }
 
 const SearchRepoName = async (req, res) => {

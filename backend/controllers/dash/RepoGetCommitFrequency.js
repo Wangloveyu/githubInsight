@@ -26,14 +26,18 @@ const RepoGetCommitFrequency = async (owner, name, octokit) => {
           page: i,
         }
       );
-      if (NextRepoMessage.data.length == 0) break;
+      if (NextRepoMessage.data.length == 0) 
+        break;
       else repoMessage.data = repoMessage.data.concat(NextRepoMessage.data);
     }
+    console.log(1);
     var orgs = [];
     var urls = []
     try {
       /** analysis the company info */
-      for (var i = 1; i < repoMessage.data.length; i++) {
+      for (var i = 1; 
+            i < repoMessage.data.length<1000?repoMessage.data.length:1000; 
+          i++) {
         var url = repoMessage.data[i].author.url;
         // await octokit.request(
         //   "GET /users/{login}",
