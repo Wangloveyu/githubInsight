@@ -9,8 +9,8 @@ import time
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 Lock = threading.Lock
-userName = "RK_PHG"
-token = "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"
+userName = ""
+token = ""
 def GetURL(arr,url): 
   print(url)
   if url=="company": 
