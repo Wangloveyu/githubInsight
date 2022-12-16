@@ -15,6 +15,7 @@ const App = () => {
   }
   useEffect(() => {
     setData([])
+    console.log(detail)
     loadMoreData()
   }, [detail])
   return (
@@ -50,7 +51,7 @@ const App = () => {
             renderItem={(item, index) => {
               return (
                 <List.Item className={styles.listItemContainer} key={item.created_at}>
-                  <div>{index + 1}</div>
+                  <div style={{ color: item.is_active ? 'red' : '' }}>{index + 1}</div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <Avatar src={item.avatar_url} />
                     <div style={{ marginLeft: '1em' }}>{item.name}</div>

@@ -16,19 +16,29 @@ const RepoGetCommitFrequency = async (owner, name, octokit) => {
   );
 
   if (repoMessage.data.length == 0) return { 2021: "0", 2020: "0", 2019: "0" };
+  var counter = 0;
   for (var i = 2; ; i++) {
-    const NextRepoMessage = await octokit.request(
-      "GET /repos/{owner}/{repo}/commits",
-      {
-        owner: owner,
-        repo: name,
-        per_page: 100,
-        page: i,
-      }
-    );
+    console.log("commit page: "+i);
+    var NextRepoMessage = []
+    try {
+      NextRepoMessage = await octokit.request(
+        "GET /repos/{owner}/{repo}/commits",
+        {
+          owner: owner,
+          repo: name,
+          per_page: 100,
+          page: i,
+        }
+      );
+      console.log("length: "+NextRepoMessage.data.length)
+    } catch (err) { 
+       counter++;
+       console.log(counter); 
+       if(counter==10) break; else continue}
     if (NextRepoMessage.data.length == 0)
       break;
     else repoMessage.data = repoMessage.data.concat(NextRepoMessage.data);
+
   }
 
   /** get company's information, use mutiple thread or one thread */
@@ -65,9 +75,9 @@ const RepoGetCommitFrequency = async (owner, name, octokit) => {
   /** on thread spider, when the muti thread spider has nothing return */
   if (orgs.length == 0) {
     console.log("One thread Spiding...")
-    if (urls.length > 100) {
+    if (urls.length > 300) {
       var lessUrls = []
-      for (var i = 0; i < 10; i++) {
+      for (var i = 0; i < 300; i++) {
         lessUrls.push(urls[i]);
       }
       urls = lessUrls;
@@ -79,6 +89,7 @@ const RepoGetCommitFrequency = async (owner, name, octokit) => {
       try {
         const pieces = key.split("/");
         const login = pieces[pieces.length - 1];
+        console.log(login)
         await octokit.request(
           "GET /users/{login}",
           {
