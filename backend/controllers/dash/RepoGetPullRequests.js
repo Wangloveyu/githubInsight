@@ -29,6 +29,8 @@ function TypeMatch(input,allContents){
 
 const RepoGetPullRequests = async (owner, name, octokit) => {
 
+  console.log("Getting Pullrequests...");
+
     const repoMessage = await octokit.request(
       "GET /repos/{owner}/{repo}/pulls",
       {
